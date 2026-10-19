@@ -48,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key.Companion.Home
+import androidx.compose.ui.text.font.FontVariation.weight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,6 +58,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import java.nio.file.Files.size
 import java.nio.file.WatchEvent
 
 class MainActivity : ComponentActivity() {
@@ -73,7 +75,22 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
+@Composable
+fun playerScreeenButton(onClick: () -> Unit, text: String, sizeClip: Int, modifier: Modifier = Modifier){ // = - на всякий если пользователь ничего
+    // не напишет просто оставим Modifier пустым
+    Button( onClick ={ onClick() }, // разный функционал по нажатию
+        modifier = modifier // делаем возможным прописывать разные модификаторы для разных кнопок
+            .height(45.dp),
+        border = BorderStroke(1.dp, Color.Gray),
+        shape = RoundedCornerShape(sizeClip.dp), // разное скругление
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,     // Цвет самой кнопки (фон)
+            contentColor = Color.Black        // Цвет текста и иконок внутри кнопки
+        ))
+    {
+        Text(text = text , color = Color.Black) // разный текст
+    }
+}
 @Composable
 fun PlayerScreen(songs: String, artist: String, onNextClick: () -> Unit, onPrevClick: () -> Unit) {
 
@@ -150,47 +167,14 @@ fun PlayerScreen(songs: String, artist: String, onNextClick: () -> Unit, onPrevC
             horizontalArrangement = Arrangement.spacedBy(24.dp),
             verticalAlignment = Alignment.CenterVertically)
         {
-            Button( onClick ={ onPrevClick() },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(45.dp),
-                border = BorderStroke(1.dp, Color.Gray),
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,     // Цвет самой кнопки (фон)
-                    contentColor = Color.Black        // Цвет текста и иконок внутри кнопки
-                ))
-            {
-                Text(text = "<" , color = Color.Black)
-            }
 
-            Button( onClick = { play = !play},
-                modifier = Modifier
-                    .weight(1f)
-                    .height(45.dp),
-                border = BorderStroke(1.dp, Color.Gray),
-                shape = RoundedCornerShape(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,     // Цвет самой кнопки (фон)
-                    contentColor = Color.Black        // Цвет текста и иконок внутри кнопки
-                ))
-            {
-                Text(text = if (play)"STOP" else "PLAY", color = Color.Black)
-            }
+            playerScreeenButton(onClick = {onPrevClick()}, text = "<", sizeClip = 15, Modifier.weight(1f)) // кнопка назад
 
-            Button( onClick ={ onNextClick()},
-                modifier = Modifier
-                    .weight(1f)
-                    .height(45.dp),
-                border = BorderStroke(1.dp, Color.Gray),
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,     // Цвет самой кнопки (фон)
-                    contentColor = Color.Black        // Цвет текста и иконок внутри кнопки
-                ))
-            {
-                Text(text = ">" , color = Color.Black)
-            }
+            playerScreeenButton(onClick = {play = !play}, text = if (play)"STOP" else "PLAY", sizeClip = 50, Modifier.weight(1f)) // кнопка старт стоп
+
+            playerScreeenButton(onClick = {onNextClick()}, text = ">", sizeClip = 15, Modifier.weight(1f)) // кнопка вперед
+
+
         }
 
 
@@ -248,21 +232,11 @@ fun Controller(){
             TopAppBar(
                 title = {Text("Плеер", color = Color.White)},
                 actions = {
-                    Button(onClick = {controller.navigate("Profile")}, modifier = Modifier
-                        .height(50.dp)
+                    playerScreeenButton(onClick = {controller.navigate("Profile")}, text = "Профиль", sizeClip = 8, Modifier // кнопка профиль
                         .width(120.dp)
                         .border(1.dp, Color.White, RoundedCornerShape(13.dp))
-                        .padding(5.dp),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color.Black
-                        )
-
-                        )
-                    {
-                       Text("Профиль", color = Color.Black)
-                    }
+                        .padding(5.dp)
+                    )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent
