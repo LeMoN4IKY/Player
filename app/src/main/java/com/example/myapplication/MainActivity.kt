@@ -57,6 +57,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.room3.Room
+import androidx.room3.RoomDatabase
+import com.example.myapplication.domain.AppDatabase
 import com.example.myapplication.presentation.Controller
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import java.nio.file.Files.size
@@ -66,10 +69,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // setContent — это команда, которая говорит: "Отобрази на экране код Compose"
+
+        val database = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "music_db"
+        ).build()
+
+
+
         enableEdgeToEdge()
         setContent {
             MaterialTheme {
-                Controller() // Наш вызов кастомного экрана
+                Controller(database = database) // Наш вызов кастомного экрана
             }
         }
     }

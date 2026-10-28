@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.domain.AppDatabase
 import com.example.myapplication.domain.getNextIndex
 import com.example.myapplication.domain.getPrevIndex
 import com.example.myapplication.domain.globalArtists
@@ -42,7 +43,7 @@ import com.example.myapplication.presentation.screens.components.playerScreeenBu
 // Завалюев Артем Александрович
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Controller(){
+fun Controller(database: AppDatabase){
 
 
     var index by remember { mutableStateOf(0)}
