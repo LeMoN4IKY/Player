@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.domain.TrackDao
 import com.example.myapplication.presentation.screens.components.playerScreeenButton
 
 
@@ -32,7 +33,7 @@ import com.example.myapplication.presentation.screens.components.playerScreeenBu
 // Завалюев Артем Александрович
 
 @Composable
-fun PlayerScreen(songs: String, artist: String, onNextClick: () -> Unit, onPrevClick: () -> Unit) {
+fun PlayerScreen(songs: String, artist: String, onNextClick: () -> Unit, onPrevClick: () -> Unit, myDao: TrackDao) {
 
     var play by remember { mutableStateOf(false) }
 

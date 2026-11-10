@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +45,8 @@ import com.example.myapplication.presentation.screens.components.playerScreeenBu
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Controller(database: AppDatabase){
+
+    var nameTrack by rememberSaveable {mutableStateOf("") }
 
 
     var index by remember { mutableStateOf(0)}
@@ -112,18 +115,18 @@ fun Controller(database: AppDatabase){
                         },
                     onPrevClick = {
                         index = getPrevIndex(currentIndex = index, listSize = globalSongs.size)
-                    }
+                    }, myDao = database.trackdao()
                 )
 
             }
 
             composable(route = "Lover/{songs}"){ save ->
                 val songs = save?.arguments?.getString("songs") ?: ""
-                Lover(songs = songs)
+                Lover(songs = songs, myDao = database.trackdao(), nameTrack = nameTrack, valueFun = {nameTrack = it})
             }
 
             composable(route = "Profile"){
-                Profile()
+                Profile(myDao = database.trackdao())
             }
         }
 

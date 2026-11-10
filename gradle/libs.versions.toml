@@ -1,6 +1,6 @@
 [versions]
-agp = "9.3.2"
-coreKtx = "1.19.0"
+agp = "9.4.1"
+coreKtx = "1.19.1"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -8,11 +8,12 @@ lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
 kotlin = "2.2.10"
 composeBom = "2026.02.01"
-navigationCompose = "2.10.2"
 room3Common = "3.0.3"
 room3Runtime = "3.0.3"
+navigationCompose = "2.10.2"
+# 🚨 ТОЧНАЯ ВЕРСИЯ KSP ИЗ ПРОШЛОГО КРАША, ПОДХОДЯЩАЯ ПОД ТВОЙ KOTLIN:
+ksp = "2.2.10-1.0.27"
 coreAnimation = "1.0.0"
-roomCommon = "2.8.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,12 +31,16 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
 androidx-room3-common = { group = "androidx.room3", name = "room3-common", version.ref = "room3Common" }
 androidx-room3-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "room3Runtime" }
+# 🚨 ДОБАВИЛИ КОМПИЛЯТОР ROOM 3 СЮДА ДЛЯ БЛОКА DEPENDENCIES:
+androidx-room3-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "room3Runtime" }
 androidx-core-animation = { group = "androidx.core", name = "core-animation", version.ref = "coreAnimation" }
-androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+# 🚨 ВОТ ОНА, САМАЯ ГЛАВНАЯ СТРОЧКА ПЛАГИНА С ТОЧКАМИ:
+google-devtools-ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.27" }

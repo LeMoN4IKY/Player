@@ -1,18 +1,12 @@
 package com.example.myapplication.domain
 
-import android.R.string.no
 import android.net.Uri
-import androidx.core.animation.TypeConverter
-import androidx.core.net.toUri
+import androidx.room3.ColumnTypeConverter
 
 class TrackConverters {
-    @TypeConverter
-    fun fromUri(uri: Uri?): String?{
-        return uri?.toString()
-    }
+    @ColumnTypeConverter
+    fun fromUri(uri: Uri?): String? = uri?.toString()
 
-    fun toUri(uriString: String?): Uri?{
-        return if(uriString!= null) Uri.parse(uriString) else null
-    }
-
+    @ColumnTypeConverter
+    fun toUri(uriString: String?): Uri? = uriString?.let(Uri::parse)
 }

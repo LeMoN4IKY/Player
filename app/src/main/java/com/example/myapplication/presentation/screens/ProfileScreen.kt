@@ -8,13 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.domain.TrackDao
 
 
 //Экран профиля, где можно создать аккаунт
 //20.10.2026
 // Завалюев Артем Александрович
 @Composable
-fun Profile(){
+fun Profile(myDao: TrackDao){
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = 5.dp)
